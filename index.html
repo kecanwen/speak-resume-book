@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="柯灿文 · AI 全栈工程师 / 资深前端架构 —— 一份可以被追问的简历" />
+    <title>柯灿文 · 会回答问题的简历</title>
+    <script>
+      ;(function () {
+        var t = localStorage.getItem('theme')
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

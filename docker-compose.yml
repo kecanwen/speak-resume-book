@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: speak-resume-book
+    ports:
+      - "5179:80"
+    restart: unless-stopped

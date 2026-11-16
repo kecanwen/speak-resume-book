@@ -1,0 +1,27 @@
+---
+id: prefetch-handoff
+anchor: p1-prefetch
+order: 2
+title: 预拉取的数据怎么交给页面？页面先好了数据还没回来怎么办？
+type: principle
+short: >-
+  预拉取模块把请求存成以“商户+桌号”为 key 的 Promise，页面 onLoad 时按 key 去取：
+  数据回来了就直接用，还在路上就等同一个 Promise，失败或过期就按正常流程重新请求。不会发两次请求。
+followUps: [swr-race, prefetch-where]
+---
+
+本质是一个**带过期时间的 Promise 缓存**：
+
+```js
+// 路由守卫中
+prefetch.start(key, () => Promise.all([getMenu(shop), getCoupons(shop)]))
+
+// 页面 onLoad 中
+const data = await prefetch.take(key) ?? await loadNormally()
+```
+
+几个细节：
+
+- `take` 只能消费一次，避免页面返回再进来时拿到旧数据。
+- 设置 TTL（比如几秒），超时就丢弃，防止用户扫码后长时间停留。
+- 预拉取失败不报错，静默降级到页面自己请求，保证不会比原来更差。
