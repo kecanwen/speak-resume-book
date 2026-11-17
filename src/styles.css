@@ -177,6 +177,16 @@ button {
   color: var(--ink-soft);
 }
 
+.resume .projects-lede {
+  margin: 0 0 28px;
+  padding: 14px 16px;
+  border-left: 3px solid rgba(var(--u), 0.55);
+  font: 15px/1.85 var(--sans);
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--line) 40%, transparent);
+  border-radius: 0 8px 8px 0;
+}
+
 .resume h2 {
   display: flex;
   align-items: center;

@@ -1,0 +1,15 @@
+---
+id: yifeng-fe-why
+anchor: job-yifeng-fe
+order: 2
+title: 为什么加盟要单独搞一套前端框架，而不是用集团统一平台？
+type: tradeoff
+short: >-
+  加盟是多租户 B 端 + 部分小程序，迭代节奏和合规（毛利、医保）与直营不同；
+  集团平台偏通用，加盟需要把租户、风控、清结算语义写进脚手架默认值里，否则后端转全栈会反复踩坑。
+followUps: [yifeng-fullstack, api-sync-break]
+---
+
+- **直营平台：** 单租户假设多，表单和权限模型简单。
+- **加盟：** 每条请求带 `tenant_id`，营销要接毛利拦截，页面错误结构要对齐 Java `BizException`。
+- **取舍：** 复用集团 UI 组件库，但应用壳、请求层、代码生成和 CI 门禁是加盟专用；后续可把成熟部分回馈集团。

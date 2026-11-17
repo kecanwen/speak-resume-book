@@ -1,0 +1,15 @@
+---
+id: bi-dim
+anchor: p2-bi
+order: 1
+title: 大数据报表指标很多，工作台怎么和数仓分工？
+type: principle
+short: >-
+  数仓算指标、落 ADS；工作台做指标目录、鉴权、维度裁剪、分页与导出任务。
+  不把 SQL 下放到小程序，查询 DSL 白名单化防注入。
+followUps: [bi-async, rbac-scope]
+---
+
+- **ADS 表：** 门店 × 日 × 指标列，带分区键。
+- **工作台：** 把 `store_ids` 转成 WHERE 条件，督导只能查下辖门店分区。
+- **口径：** 每个指标绑 Wiki 口径编号，前后端展示「指标说明」。

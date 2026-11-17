@@ -1,0 +1,15 @@
+---
+id: figma-diff-how
+anchor: p3-figma-diff
+order: 1
+title: 「像素级」比对具体怎么做？和设计 Token 什么关系？
+type: principle
+short: >-
+  Token 管日常开发一致性；像素 diff 管发版门禁。对固定视口截图，与 Figma 导出 PNG 做感知差异，
+  超阈值报区域坐标与色值/字号偏差，不是整页肉眼对稿。
+followUps: [figma-diff-dynamic]
+---
+
+- **Token 层：** 颜色、间距、字号从设计系统引用，减少实现漂移。
+- **像素层：** 对营销落地页、配置向导等「定格 UI」做 Playwright 截图 + pixelmatch/类似算法。
+- **报告：** 输出 diff 热图 + 最大偏移量，便于设计和前端对齐是改稿还是改代码。

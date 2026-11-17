@@ -1,0 +1,15 @@
+---
+id: yifeng-fe-scope
+anchor: job-yifeng-fe
+order: 1
+title: 「前端工程底座」具体包含什么？和业务页面怎么划界？
+type: soft
+short: >-
+  底座 = 脚手架 + 组件/设计 Token + Agent 流水线 + 契约联调 + Chromium 小程序 E2E + PageSpy/监控。
+  我负责框架和门禁，业务页面由后端同学按模板填，复杂交互和领域规则仍由我或结对 review。
+followUps: [scaffold-backend, wxa-runner-vs-taro]
+---
+
+- **我写的：** 代码生成器、ESLint/CI 门禁、OpenAPI 同步流水线、视觉回归配置、小程序 E2E 流水线（选型集成与兼容层）、PageSpy 与监控接入规范。
+- **大家写的：** 各业务域的页面与表单配置，在约定目录内开发，不得绕过租户与错误处理层。
+- **边界原则：** 共性能力进底座，一次性业务规则留在页面；底座改动走 RFC，避免「每个项目 fork 一套」。

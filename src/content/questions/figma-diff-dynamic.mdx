@@ -1,0 +1,15 @@
+---
+id: figma-diff-dynamic
+anchor: p3-figma-diff
+order: 2
+title: 列表、图表这种动态区怎么避免视觉回归误报？
+type: tradeoff
+short: >-
+  对动态区打「忽略蒙版」或只比对布局骨架；数据用固定 Mock 种子渲染。
+  完全动态区不做像素门禁，改用组件快照 + 关键 CSS 断言。
+followUps: [figma-diff-how, test-agent-ci]
+---
+
+- **蒙版：** 配置每张基准图的可忽略矩形（时间戳、头像、图表曲线）。
+- **Mock：** CI 用稳定 JSON fixture，避免随机 ID。
+- **分层：** 营销静态页严；数据看板宽。

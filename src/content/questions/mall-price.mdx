@@ -1,0 +1,13 @@
+---
+id: mall-price
+anchor: p2-mall
+order: 1
+title: B2B 商城里「合同价 + 活动价 + 医保限价」怎么合并？
+type: principle
+short: >-
+  价源分优先级管线：基础合同价 → 区域/客户价套 → 活动扣减 → 毛利红线与医保限价兜底；
+  下单快照落库，对账以快照为准。
+followUps: [mall-submit, mall-credit]
+---
+
+算价在服务端完成，小程序只展示「预估价」与「提交后锁价」。多 SKU 购物车并行算价要注意性能，热价走 Redis。

@@ -1,0 +1,15 @@
+---
+id: mp-bff-agg
+anchor: p2-mp-bff
+order: 1
+title: 为什么小程序要走 BFF 聚合，不让端上自己调五个系统？
+type: tradeoff
+short: >-
+  门店弱网 + 小程序并发请求上限 + Token 不能下发给多个域；
+  BFF 在一跳内完成鉴权、并行调域服务、字段裁剪与错误归一，端上只拿一份 VO。
+followUps: [integrate-saga]
+---
+
+- **弱网：** 5 次串行 RTT 在门店 Wi-Fi 上体验不可接受。
+- **安全：** 授信/财务等敏感字段按角色裁剪后再下发。
+- **演进：** 域接口变更只改 Adapter，小程序契约保持稳定。

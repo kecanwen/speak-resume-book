@@ -1,0 +1,16 @@
+---
+id: api-sync-codemod
+anchor: p3-api-sync
+order: 1
+title: 接口变更后，前端代码是谁改的——Codemod 还是 Agent？
+type: principle
+short: >-
+  机械变更（重命名、类型收缩）走 TypeScript + jscodeshift；
+  跨文件业务适配走 Agent 草稿 MR。两者都在同一流水线里，必须人审。
+followUps: [api-sync-break, scaffold-convention]
+---
+
+1. OpenAPI diff → 生成类型与 Client。
+2. `tsc` 报错的引用点 → Codemod 批量改 import/字段名。
+3. 仍报错或逻辑分支变化 → Agent 读 diff 上下文出补丁。
+4. 前端适配 MR 与后端契约 MR 在 CI 里双向关联后才能合。

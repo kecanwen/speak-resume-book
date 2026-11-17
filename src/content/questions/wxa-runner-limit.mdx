@@ -1,0 +1,15 @@
+---
+id: wxa-runner-limit
+anchor: p3-wxa-runner
+order: 3
+title: 浏览器里跑小程序，哪些能力仍然模拟不全？
+type: challenge
+short: >-
+  蓝牙、部分支付、真实定位等要么 Mock 要么走真机抽检；基础库与线上必须 pin 对齐。
+  不承诺 100% 真机，核心链路 E2E + 契约测试分工明确。
+followUps: [wxa-runner-sunset, pagespy-deploy]
+---
+
+面试时主动说边界：E2E 覆盖主路径与表单，支付/硬件走契约测试 + 真机抽检。
+
+基础库 bump 纳入发版 checklist，与微信官方变更日志对齐。

@@ -1,0 +1,15 @@
+---
+id: monitor-ai-privacy
+anchor: p3-monitor
+order: 1
+title: AI 监控会不会把用户隐私发给大模型？
+type: challenge
+short: >-
+  默认只做聚合：堆栈聚类、接口错误码分布、无 PII 的 DOM 路径统计；
+  需要模型归因时去掉正文与表单值，只送错误签名与 anonymized 序列。敏感租户走私有化小模型或规则引擎。
+followUps: [monitor-trace]
+---
+
+- **不上云：** 原始录屏与 Storage 不进 LLM。
+- **可解释：** 模型输出必须链到具体错误簇样本 ID，人工可复核。
+- **合规：** 与法务确认零售/医药字段分级（你司按实说）。

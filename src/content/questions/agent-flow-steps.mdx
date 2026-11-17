@@ -1,0 +1,17 @@
+---
+id: agent-flow-steps
+anchor: p3-agent-flow
+order: 1
+title: Agent 工作流里有哪些固定阶段？哪一步必须人工卡点？
+type: principle
+short: >-
+  Figma/需求解析 → 脚手架生成 → 契约绑定 → 单测/快照草稿 → 视觉回归 → PR。
+  人工必审：业务规则、毛利/权限相关分支、以及 Agent 改动的接口适配补丁。
+followUps: [agent-flow-guard, scaffold-backend]
+---
+
+1. **输入：** Figma 节点或需求单 ID，拉取组件与 Token 映射表。
+2. **生成：** 页面骨架 + 空接口层 + 表单 Schema 占位。
+3. **契约：** 绑定 OpenAPI 版本，类型生成失败则流水线失败。
+4. **质量：** 触发单测 Agent 与视觉 diff（静态区）。
+5. **卡点：** 领域 owner review 后才可合并；Agent 不得直接合主分支。

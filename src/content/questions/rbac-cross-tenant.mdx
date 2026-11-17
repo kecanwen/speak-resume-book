@@ -1,0 +1,15 @@
+---
+id: rbac-cross-tenant
+anchor: p2-rbac
+order: 2
+title: 怎么防止 A 加盟商用户通过改参数看到 B 加盟商数据？
+type: challenge
+short: >-
+  不信任前端传的 tenantId：以 Token 为准，且写操作二次校验资源归属；
+  列表接口强制带租户条件，ID 直查走「资源—租户」归属表。越权打审计告警。
+followUps: [rbac-scope, mall-credit]
+---
+
+典型坑：详情页传 `?storeId=` 被人篡改。解决：先查 `store_franchisee_map` 校验再返回数据。
+
+集成测试用两个租户账号互访核心接口，CI 必跑。

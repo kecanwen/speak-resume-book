@@ -1,0 +1,13 @@
+---
+id: mall-submit
+anchor: p2-mall
+order: 3
+title: 一单多仓拆单时，后端事务边界怎么划？
+type: principle
+short: >-
+  母单本地落库，子单按仓/供应商拆分异步创建请货单；
+  子单失败不回滚已成功的兄弟单，母单标记部分成功，人工或重试任务处理失败子单。
+followUps: [integrate-saga, mall-price]
+---
+
+并发拆单用分布式锁按 `cart_submit_id` 串行，防止双提。每个子单带同一 traceId 方便财务对账。

@@ -1,0 +1,15 @@
+---
+id: scaffold-convention
+anchor: p3-scaffold
+order: 2
+title: 脚手架里最重要的约定是哪几条？
+type: principle
+short: >-
+  ① 接口只走生成的 Client；② 页面必须声明租户与权限守卫；③ 错误一律用统一 `BizError` 展示组件；
+  ④ 表单优先 Schema 配置。违反则 ESLint 或 CI 失败。
+followUps: [api-sync-codemod, scaffold-backend]
+---
+
+这四条是为「后端转全栈」降低决策成本：不用每次想目录结构、错误 UI、请求写法。
+
+复杂营销规则仍建议拉前端架构一起设计 Schema 扩展点。

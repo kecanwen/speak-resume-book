@@ -1,0 +1,13 @@
+---
+id: mall-credit
+anchor: p2-mall
+order: 2
+title: 授信额度不够时，购物车到下单链路怎么处理？
+type: tradeoff
+short: >-
+  加购时软校验、提交时硬占用；不足则拆单提示或引导还款/申请临额（调授信域）。
+  占用与释放必须幂等，取消单 30 分钟内自动释放额度。
+followUps: [integrate-saga, rbac-cross-tenant]
+---
+
+硬占用失败要返回明细：缺多少、哪些 SKU 可删。避免「提交成功供应链却拒单」。

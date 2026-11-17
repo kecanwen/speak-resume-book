@@ -1,0 +1,25 @@
+---
+id: mp-skyline
+anchor: adv-mp-dual
+order: 3
+title: 微信 Skyline 新架构和传统双线程有什么区别？
+type: tradeoff
+short: >-
+  传统模式是逻辑层加每个页面一个 WebView，setData 必须过 JSBridge。Skyline 用自研渲染管线，
+  布局和绘制放到独立渲染线程，页面可共享同一引擎，框架通信不再走桥；动画和手势用 Worklet 在渲染线程执行。代价是 CSS 和组件兼容面更窄，需要按页灰度，跟 WebView 混用。
+followUps: [mp-setdata-perf, mp-alipay-diff]
+---
+
+我会先说清楚：Skyline 不是把双线程整盘推翻，而是把**渲染后端**从 WebView 换成自研引擎，并把通信和动画的代价打下来。
+
+**传统 WebView 模式：** 逻辑在 AppService，每个页面一个 WebView。WebView 里的 JS、DOM、样式、布局、绘制走同一条线程，业务 JS 过重就会卡住渲染。所以微信才把业务逻辑拆到独立线程，页面更新靠 setData 经 Native / JSBridge 异步传过去。安全性和流畅度有了，但每个页面都要新建引擎实例，内存高，框架数据还得过桥，跟手动画容易有延迟。iOS 上后台页还可能被系统回收 WKWebView。
+
+**Skyline 的关键变化：**
+
+- 布局、合成、绘制放到独立渲染线程；原先 WebView 里那套 JS / DOM 建树，放到 AppService 里的独立上下文。
+- 多个 Skyline 页面可以共享同一个渲染引擎实例，不用每页新建一个 JS 引擎，内存和启动开销更小，连续跳转也不再受 WebView 那套 10 层页面栈限制。
+- 框架代码之间不必再经 JSBridge 换数据。搭配默认启用的 glass-easel 组件框架后，setData 不再有跨线程通信和序列化开销。
+- 动画和手势用 Worklet 直接跑在渲染线程，用 `shared` 值驱动样式，不必每帧绕回逻辑层。原生组件同层渲染也更稳定。
+- 样式在构建期预编译成二进制，运行时少一次文本解析。
+
+**取舍也很明确。** Skyline 为了性能大幅精简了 CSS，部分组件和第三方库要适配；WXS 被移到 AppService 后，读页面信息会变成异步，复杂动画要改用 Worklet。所以我不会一刀切全站切换，而是按页面或分包设置 `renderer: skyline`，不支持时再回退 WebView，列表滚动、跟手拖拽、转场这些痛点页优先迁。

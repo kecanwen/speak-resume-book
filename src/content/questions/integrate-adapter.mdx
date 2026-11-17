@@ -1,0 +1,21 @@
+---
+id: integrate-adapter
+anchor: p2-integrate
+order: 2
+title: 五套三方接口风格不一，防腐层你们怎么做？
+type: tradeoff
+short: >-
+  每域一个 Adapter 包：鉴权、重试、超时、错误码映射、Mock 开关；
+  域模型与加盟领域模型分开，禁止把 DTO 泄露到 Controller。
+followUps: [integrate-saga, mp-bff-agg]
+---
+
+| 域 | 典型对接点 |
+| --- | --- |
+| 人事 | 人员/门店主数据、在岗状态 |
+| 授信 | 额度查询、占用/释放 |
+| 财务 | 应付、对账、回款状态 |
+| 请货 | 申请单、审批流 |
+| 供应链 | 库存、批次、配送 |
+
+联调环境用 WireMock + 契约测试，避免盯着三方 UAT 空转。

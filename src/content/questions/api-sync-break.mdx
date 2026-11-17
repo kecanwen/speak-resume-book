@@ -1,0 +1,15 @@
+---
+id: api-sync-break
+anchor: p3-api-sync
+order: 2
+title: 破坏性变更怎么拦？后端先上还是前端先上？
+type: tradeoff
+short: >-
+  契约仓库先行：标 breaking 的版本必须同时有前端适配 MR 或 Feature Flag；
+  部署顺序约定为「先扩容兼容读、再切写、再删字段」，靠网关做短期双读。
+followUps: [yifeng-fe-why, api-sync-codemod]
+---
+
+- **拦：** breaking diff 无关联前端 MR → 后端合并不了。
+- **上：** 灰度租户先验证，再全量。
+- **坑：** 别指望 Agent 自动理解业务语义删除，破坏性逻辑变更一定人审。

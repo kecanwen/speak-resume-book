@@ -1,0 +1,15 @@
+---
+id: pagespy-deploy
+anchor: p3-pagespy
+order: 1
+title: PageSpy 在你们环境怎么部署、数据安全怎么控？
+type: principle
+short: >-
+  内网 K8s 部署，门店 H5/小程序调试包只连 VPN 或零信任入口；
+  会话默认脱敏（手机号、身份证打码），录屏保留 7 天，需工单申请延期。
+followUps: [monitor-trace, wxa-runner-limit]
+---
+
+- **接入：** 脚手架默认注入 PageSpy 开关，生产默认关闭，灰度/预发可开。
+- **权限：** 只有对应租户研发能订阅会话，防止越权看加盟商数据。
+- **与监控：** 用户同意调试时生成的 sessionId 写入前端监控，便于和 Trace 关联。

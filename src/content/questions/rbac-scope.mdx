@@ -1,0 +1,15 @@
+---
+id: rbac-scope
+anchor: p2-rbac
+order: 1
+title: 总部督导、加盟商老板、店员三种人，数据权限怎么切？
+type: principle
+short: >-
+  Token 带 tenant + store 列表 + role；菜单 RBAC 管能进哪些页，数据权限管 SQL 范围。
+  督导看区域下门店聚合，老板看本加盟商全门店，店员仅本人任务与单据。
+followUps: [rbac-cross-tenant, bi-dim]
+---
+
+1. 人事域同步组织树，登录时解析默认数据范围。
+2. `@DataScope` + MyBatis 拦截器拼接 `store_id IN (...)`。
+3. 总部角色走单独白名单表，禁止用「空列表 = 看全部」这种宽松默认。

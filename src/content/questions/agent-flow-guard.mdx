@@ -1,0 +1,15 @@
+---
+id: agent-flow-guard
+anchor: p3-agent-flow
+order: 2
+title: Agent 生成的代码如何保证不「胡写」？
+type: challenge
+short: >-
+  三层：只允许在生成器模板内改、ESLint/类型/契约门禁、以及 diff 仅限白名单目录。
+  大段重写须人工批准；敏感目录（auth、tenant、支付）Agent 只读。
+followUps: [test-agent-trust]
+---
+
+- **模板约束：** 生成结果必须是已知 AST 模式，不允许随意新增依赖。
+- **验证：** `tsc`、契约测试、视觉回归阈值未过则不可合并。
+- **审计：** Agent MR 打标签，便于统计采纳率与回滚。

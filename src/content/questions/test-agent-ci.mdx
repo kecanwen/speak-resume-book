@@ -1,0 +1,13 @@
+---
+id: test-agent-ci
+anchor: p3-test-agent
+order: 2
+title: 测试变多了 CI 会不会很慢？
+type: principle
+short: >-
+  用变更影响分析：契约/组件 dependency graph 决定跑哪些包；
+  全量只在夜间或发版前跑。视觉回归与单测共用同一套「受影响模块」输入。
+followUps: [api-sync-break]
+---
+
+Monorepo 内 `pnpm test --filter=...[origin/main]` + 接口契约 diff 映射到页面包，避免每次全仓测试。

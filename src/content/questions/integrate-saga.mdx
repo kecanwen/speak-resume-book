@@ -1,0 +1,13 @@
+---
+id: integrate-saga
+anchor: p2-integrate
+order: 1
+title: 请货单创建要调五个系统，你怎么保证一致？
+type: principle
+short: >-
+  编排拆同步校验（授信、资质）+ 异步落账（财务、供应链）；
+  本地事务记单据状态机，Outbox 发 MQ，失败可重试或转人工。不搞长分布式事务。
+followUps: [integrate-adapter, mall-submit]
+---
+
+状态示例：`DRAFT → CREDIT_HOLD → SCM_RESERVED → FIN_POSTED → DONE`，每步幂等键 = 业务单号 + 步骤名。

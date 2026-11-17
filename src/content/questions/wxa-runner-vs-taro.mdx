@@ -1,0 +1,19 @@
+---
+id: wxa-runner-vs-taro
+anchor: p3-wxa-runner
+order: 1
+title: 为什么走 wxa-runner 这条路线，而不是 Taro/uni 转 H5？
+type: tradeoff
+short: >-
+  要的是小程序语义 + 能在 Chromium 里稳定跑 CI，不是再维护一套伪 H5。
+  当时用 wxa-runner 思路：官方编译链与基础库进浏览器，Playwright 才能靠谱定位；我负责的是选型论证和内网集成，不是写模拟器内核。
+followUps: [wxa-runner-sunset, wxa-runner-limit]
+---
+
+| 方案 | 语义保真 | E2E 定位 | CI 友好 |
+| --- | --- | --- | --- |
+| uni/Taro 转 H5 | 低 | 中 | 中 |
+| 微信开发者工具 | 高 | 差 | 差 |
+| 浏览器载官方链 + 双线程模拟 | 高 | 高（标准 DOM） | 高 |
+
+**我的贡献边界：** 对比方案、拍板路线、内网构建镜像、Playwright 流水线、用例与 nightly；内核当时来自上游 npm，**GitHub 已不可访问，后续由团队维护兼容层 / 替换方案**。

@@ -1,0 +1,13 @@
+---
+id: monitor-trace
+anchor: p3-monitor
+order: 2
+title: 前端监控怎样和后端 Trace 串起来？
+type: principle
+short: >-
+  请求层统一注入 traceId（与 Java MDC 一致），前端报错上报带 traceId + 页面路由 + 租户；
+  监控台一键跳日志/SQL 慢查询，PageSpy 会话也可挂同一 traceId。
+followUps: [pagespy-deploy, api-sync-codemod]
+---
+
+这是加盟 B 端排障最常见的路径：页面红字 → 是契约问题还是后端 500 → 直接定位到 Service。

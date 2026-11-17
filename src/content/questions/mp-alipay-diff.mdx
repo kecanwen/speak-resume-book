@@ -1,0 +1,22 @@
+---
+id: mp-alipay-diff
+anchor: adv-mp-dual
+order: 4
+title: 支付宝小程序在底层实现上和微信有哪些细微差异？
+type: principle
+short: >-
+  两边都是逻辑层加渲染层的双线程，setData 经 Native 桥更新视图。差异主要在引擎、模板和演进路径：
+  Android 上微信视图层是 XWeb，支付宝是自研 Chromium 内核；模板和 API 分别是 WXML / wx 与 AXML / my；
+  微信另走了 Skyline，支付宝更多是在自有内核里做同层渲染和通信优化。双端复用时要对齐这些差异，而不是假设完全同构。
+followUps: [mp-dual-thread, mp-skyline]
+---
+
+大框架是像的：都是逻辑层跑 JS、渲染层走浏览器内核、中间经宿主桥做 setData 和事件传递。面试里我更愿意讲“细微差异落在哪”，以及双端复用时要防什么。
+
+**1. 运行引擎不完全一样。** iOS 两边逻辑层都是 JavaScriptCore，微信视图层是 WKWebView。Android 上两边逻辑层都是 V8，但视图层内核不同：微信是 XWeb（基于 Mobile Chromium），支付宝是自研的 mPaaS / U4 内核（同样基于 Chromium，针对容器做了同层渲染、独立 V8 环境和通信通道优化）。所以同一套样式和同层原生组件，在两家 Android 客户端上的表现不一定逐像素一致，性能和兼容问题要分开测。
+
+**2. 模板、事件和桥的接口不同。** 微信是 WXML / WXSS、`bindtap`、`wx`、WeixinJSBridge；支付宝是 AXML / ACSS、`onTap`、`my`、AlipayJSBridge。数据驱动看起来都是 `setData`，但组件属性、生命周期和开放能力集合并不对齐。另外，微信有 WXS，支付宝对应的是 SJS——官方说明里，SJS 和逻辑层脚本跑在同一引擎的不同线程，语义相近，调用细节不能直接照搬。
+
+**3. 架构演进路径不同。** 微信在 WebView 之外推出了 Skyline：自研渲染管线、glass-easel、Worklet，把一部分通信和动画代价从桥上拿掉。支付宝目前仍以双线程加自有内核为主，优化更多发生在内核、同层渲染和容器通信，而不是换一套对开发者暴露的新渲染引擎。所以“高频动画怎么写、页面栈和内存怎么治理”，两端不能用同一套结论。
+
+**工程上我怎么用这些差异。** 双端复用时，业务逻辑和数据层可以共享，渲染和桥这一层要留适配。性能问题和线上崩溃也要按端拆开看：微信 Android 的 XWeb、支付宝 Android 的 U4、iOS 的 JSCore（无 JIT，计算密集场景会更慢）不是同一个瓶颈。不能拿一端的 setData 优化结论，直接当成另一端也成立。

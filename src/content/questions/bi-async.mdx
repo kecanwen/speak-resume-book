@@ -1,0 +1,13 @@
+---
+id: bi-async
+anchor: p2-bi
+order: 2
+title: 报表查询慢怎么办？小程序里怎么展示？
+type: principle
+short: >-
+  轻量看板走同步聚合（昨日汇总）；大范围导出走异步任务 + 模板消息/站内信，
+  小程序轮询或订阅通知后下载 Excel（OSS 临时链）。
+followUps: [mp-bff-agg]
+---
+
+同步接口设 3s 超时，超时降级提示「切换精简版」。避免在小程序里拉百万行 JSON。

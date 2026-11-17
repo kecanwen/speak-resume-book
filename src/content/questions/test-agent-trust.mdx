@@ -1,0 +1,15 @@
+---
+id: test-agent-trust
+anchor: p3-test-agent
+order: 1
+title: 自测 Agent 写的测试你会全收吗？
+type: challenge
+short: >-
+  不会。Agent 只产出草稿 MR，人删夸张断言、补租户与异常分支；
+  对金额、毛利类断言必须手写或双人 review。
+followUps: [test-agent-ci, agent-flow-guard]
+---
+
+- **自动合并：** 仅 snapshot、简单渲染、纯工具函数类。
+- **人工必审：** 接口集成测、涉及资金的用例。
+- **指标：** 跟踪 Agent 用例一年后的删除率，反推 Prompt 质量。
